@@ -1,0 +1,14 @@
+.homePage-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .homePage-categories-container {
+    padding: 0 10%;
+    :nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    @media screen and (max-width:599px){
+      padding: 0 2%;
+    }
+  }

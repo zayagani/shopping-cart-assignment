@@ -1,0 +1,46 @@
+@import "../../maxin.scss";
+
+.productList-container {
+  // margin: 0 10%;
+  display: flex;
+  @include for-desktop-up {
+    margin: 0 10%;
+  }
+  @media screen and (max-width:599px){
+    flex-direction: column; 
+   }
+  .categories-container {
+    // padding: 20px;
+    background-color: #eaeaea;
+    width: 20%;
+    @media screen and(max-width:599px){
+      width: 100%;
+      .dropdown{
+        background: #d00156;
+        padding: 10px 0px 10px 0px;
+        margin: 10px 0px 10px 0px;
+        img{
+          width: 20px;
+          background: red;
+          right: 10px;
+          position: absolute;
+        }
+        .invert{
+          transform: rotate(180deg);
+        }
+      }
+      
+    }
+  }
+  .products-container {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    // padding: 10px;
+    margin: 20px;
+    justify-content: space-between;
+    @media screen and (max-width:599px){
+      width: 90%;
+    }
+  }
+}
