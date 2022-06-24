@@ -11,22 +11,6 @@ import CartPage from './Component/CartPage';
 
 function App() {
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
     <Router>
       <Routes>
         <Route path="/" element={<Header />}>
@@ -35,10 +19,6 @@ function App() {
            <Route path="/signin" element={<SignIn />} />
            <Route path="/products/*" element={<ProductView />} />
            <Route path="cart" element={<CartPage />} />
-          {/*<Route path="/products/*" element={<ProductView />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="cart" element={<CartModel />} /> */}
         </Route>
       </Routes>
       <Footer />

@@ -3,6 +3,15 @@ import "../ProductCard/productcard.scss";
 import Button from "../Button";
 
 const ProductCard = ({ product }) => {
+
+const buyNowClick=(product)=>{
+  window.location.reload()
+  const prodArray=[]
+  prodArray.push({...product})
+  localStorage.setItem("item",JSON.stringify(prodArray))
+
+}
+
   return (
     <div className="product-container">
       <div className="product-name">{product.name}</div>
@@ -14,13 +23,13 @@ const ProductCard = ({ product }) => {
       </div>
       <div className="product-price-button-container">
         <div className="product-price">Rs{product.price}</div>
-        <Button type="sign">
-          Buy now
+        <Button type="sign" handleClick={()=>buyNowClick(product)}>
+          Buy now 
           <span
             className="product-card-price--mobile"
             style={{ color: "white" }}
           >
-            @ Rs 187
+           Rs {product.price}
           </span>
         </Button>
       </div>

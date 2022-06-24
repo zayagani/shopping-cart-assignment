@@ -5,41 +5,53 @@ import ProductCard from "../../Component/ProductCard";
 import { useNavigate } from "react-router-dom";
 import SideBar from '../../Component/SideBar';
 
-const ProductListingPage = () => {
+const PlpPages = () => {
   const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
+  const [activeCategory, setActiveCategory] = useState("active");
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("all");
   const [openFlag,setOpenFlag]=useState(false)
 
   useEffect(() => {
     setProducts(
-      activeCategory !== "all"
+      activeCategory !== "active"
         ? productList.filter((product) => product.category === activeCategory)
         : productList
     );
   }, [activeCategory, categories, productList]);
 
   useEffect(() => {
+    // fetch("http://localhost:5000/products")
+    // .then(res => {
+    //   debugger
+    //   return res.json();
+    // })
+    // .then(json => {
+    //   debugger
+    //   setProductList(json);
+    //   setProducts(json);
+    
+    // })
     (async () => {
-      const fetchproducts = await axios.get("/products");
+     const fetchproducts = await axios.get("/products");
       const products = await fetchproducts.data;
       setProductList(products);
       setProducts(products);
+
       const fetchCategory = await axios.get("/categories");
       const categoryList = await fetchCategory.data;
       setCategories(categoryList);
     })();
   }, []);
 
-  const handleCategoryClick = (category) => {
-    category.id === activeCategory
-      ? setActiveCategory("all")
-      : setActiveCategory(category.id);
-    category.id === activeCategory
+  const handleCategoryClick = (items) => {
+    items.id === activeCategory
+      ? setActiveCategory("active")
+      : setActiveCategory(items.id);
+    items.id === activeCategory
       ? navigate("/products")
-      : navigate(`/products/${category.id}`);
+      : navigate(`/products/${items.id}`);
   };
 
   function IsMobile() {
@@ -48,7 +60,6 @@ const ProductListingPage = () => {
   };
 
   const isOpen =(openFlag)=>{
-    //debugger
    if(openFlag){
     setOpenFlag(false)
    }else{
@@ -63,26 +74,26 @@ const ProductListingPage = () => {
         <div className="dropdown">Fruits & Vegitable
         <img src="/static/images/dropdown.png" alt="arrow png" className={openFlag ? "invert":""}/>
         </div>
-        {categories.map((category) =>
-          category.enabled && openFlag ? (
+        {categories.map((items) =>
+          items.enabled && openFlag ? (
             <SideBar
-              active={category.id === activeCategory}
+              active={items.id === activeCategory}
               handleClick={handleCategoryClick}
-              key={category.id}
-              category={category}
+              key={items.id}
+              category={items}
             />
           ) 
           : null
         )}
       </div>:
       <div className="categories-container">
-        {categories.map((category) =>
-          category.enabled ? (
+        {categories.map((items) =>
+          items.enabled ? (
             <SideBar
-              active={category.id === activeCategory}
+              active={items.id === activeCategory}
               handleClick={handleCategoryClick}
-              key={category.id}
-              category={category}
+              key={items.id}
+              category={items}
             />
           ) : null
         )}
@@ -96,4 +107,4 @@ const ProductListingPage = () => {
   );
 };
 
-export default ProductListingPage;
+export default PlpPages;
