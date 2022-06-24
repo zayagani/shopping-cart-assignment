@@ -21,11 +21,11 @@ const HomePage = () => {
 
   return (
     <div className="homePage-container">
-      <Carosal banners={bannerdata} />
+      <Carosal sliderData={bannerdata} />
       <div className="homePage-categories-container">
         {categorydata.map((category) => {
           return category?.enabled ? (
-            <Banner key={category.id} category={category} />
+            <Banner key={category.id} bannerData={category} />
           ) : null;
         })}
       </div>

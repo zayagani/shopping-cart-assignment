@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-//import Input from "../../components/Inputs";
 import "../Register/Register.scss";
 import Button from "../../Component/Button";
 import Inputs from "../../Component/Inputs";
 
 const Register = () => {
-  const initialFromFields = {
-    firstName: "",
+  const inputFromFields = {
+    fName: "",
     lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
   };
-  const [formFields, setFormFields] = useState(initialFromFields);
-  const { firstName, lastName, email, password, confirmPassword } = formFields;
+  const [formFields, setFormFields] = useState(inputFromFields);
+  const { fName, lastName, email, password, confirmPassword } = formFields;
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -33,7 +32,7 @@ const Register = () => {
         <Inputs
           type="text"
           name="firstName"
-          value={firstName}
+          value={fName}
           label="First Name"
           required
           onChange={handleInputChange}

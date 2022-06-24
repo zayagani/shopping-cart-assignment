@@ -1,30 +1,31 @@
 import React from "react";
 import "../Banner/banner.scss";
-//import Button from "../Button/Button";
 import Button from "../Button";
 
-const Banner = ({ category }) => {
+const Banner = ({ bannerData }) => {
   return (
-    <div className="category-container" key={category.key}>
-      <div className="category-image-box">
+    <React.Fragment>
+    <div className="banner" key={bannerData.key}>
+      <div className="banner-image">
         <img
-          className="category-image"
-          src={category.imageUrl}
+          className="banner-category-image"
+          src={bannerData.imageUrl}
           alt="Category"
         />
       </div>
-      <div className="category-content-box">
-        <div className="category-content-heading">{category.name}</div>
-        <div className="category-contnent-description">
-          {category.description}
+      <div className="banner-box">
+        <div className="banner-heading">{bannerData.name}</div>
+        <div className="banner-description">
+          {bannerData.description}
         </div>
-        <div className="category-contnent-button">
+        <div className="banner-button">
           <Button type="xl" onClick={null}>
-            Explore {category.key}
+            Explore {bannerData.key}
           </Button>
         </div>
       </div>
     </div>
+    </React.Fragment>
   );
 };
 

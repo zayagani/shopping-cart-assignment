@@ -40,20 +40,16 @@ useEffect(()=>{
 const increment=(data)=>{
   setCount(count+1)
   setItemPrice(data * (count+1))
-  //setProdData(data.price*1)
-  debugger
 }
 const decrement=(data)=>{
   setCount(count-1)
   setItemPrice(data * (count-1))
-  //setProdData(data.price*1)
-  debugger
 }
 
   return (
     <div className="CartModel-container">
-      <div className="cartModel">
-        <header className="cartModel-header-container">
+      <div className="cartPopUp">
+        <header className="cartPopUp-header-container">
           <div className="cartModel-header-left">
             My Cart <span>({itemData && itemData.length} item)</span>
           </div>

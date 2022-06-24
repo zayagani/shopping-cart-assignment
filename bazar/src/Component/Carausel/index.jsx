@@ -2,20 +2,21 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "./carausel.scss";
 
-const Carosal = ({ banners }) => {
+const Carosal = ({ sliderData }) => {
   return (
-    <div className="carousel-container">
-      <div className="carousel-box">
+    <div className="home-carousel">
+      <div className="home-carousel-box">
         <Carousel
-          showStatus={false}
-          showThumbs={false}
-          centerMode={true}
           centerSlidePercentage={100}
           className="carosal"
           autoPlay={true}
-          infiniteLoop={true}  
+          infiniteLoop={true} 
+          showStatus={false}
+          showThumbs={false}
+          centerMode={true}
+           
         >
-          {banners.map((item) => {
+          {sliderData.map((item) => {
             return (
               <div id={item.id} key={item.id}>
                 <img src={item.bannerImageUrl} alt={item.bannerImageAlt} />

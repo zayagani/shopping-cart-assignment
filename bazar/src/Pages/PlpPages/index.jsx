@@ -6,42 +6,31 @@ import { useNavigate } from "react-router-dom";
 import SideBar from '../../Component/SideBar';
 
 const PlpPages = () => {
-  const navigate = useNavigate();
-  const [productList, setProductList] = useState([]);
+  const barnavigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("active");
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategoryList] = useState([]);
+  const [productsList, setProductList] = useState([]);
   const [openFlag,setOpenFlag]=useState(false)
+  const [itemList, setItemList] = useState([]);
 
   useEffect(() => {
-    setProducts(
+    setProductList(
       activeCategory !== "active"
-        ? productList.filter((product) => product.category === activeCategory)
-        : productList
+        ? itemList.filter((product) => product.category === activeCategory)
+        : itemList
     );
-  }, [activeCategory, categories, productList]);
+  }, [activeCategory, categories, itemList]);
 
   useEffect(() => {
-    // fetch("http://localhost:5000/products")
-    // .then(res => {
-    //   debugger
-    //   return res.json();
-    // })
-    // .then(json => {
-    //   debugger
-    //   setProductList(json);
-    //   setProducts(json);
-    
-    // })
     (async () => {
      const fetchproducts = await axios.get("/products");
       const products = await fetchproducts.data;
+      setItemList(products);
       setProductList(products);
-      setProducts(products);
 
       const fetchCategory = await axios.get("/categories");
       const categoryList = await fetchCategory.data;
-      setCategories(categoryList);
+      setCategoryList(categoryList);
     })();
   }, []);
 
@@ -50,8 +39,8 @@ const PlpPages = () => {
       ? setActiveCategory("active")
       : setActiveCategory(items.id);
     items.id === activeCategory
-      ? navigate("/products")
-      : navigate(`/products/${items.id}`);
+      ? barnavigate("/products")
+      : barnavigate(`/products/${items.id}`);
   };
 
   function IsMobile() {
@@ -99,7 +88,7 @@ const PlpPages = () => {
         )}
       </div>}
       <div className="products-container">
-        {products.map((product) => {
+        {productsList.map((product) => {
           return <ProductCard key={product.id} product={product} />;
         })}
       </div>
