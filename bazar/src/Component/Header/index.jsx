@@ -4,19 +4,22 @@ import { MdShoppingCart } from "react-icons/md";
 import CartPage from "../CartPage";
 import { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { connect } from 'react-redux'
 
-const Header = () => {
+const Header = (_addToCartReducer) => {
   const [isCartPopUp, setIsCartPopUp] = useState(false);
   const [cartLength, setCartLength] = useState(0)
   const cartNavigate = useNavigate();
 
   useEffect(() => {
-    const itemLength = localStorage.getItem("item")
-    const itemLen = JSON.parse(itemLength)
-    if (itemLen) {
-      setCartLength(itemLen.length || 0)
-    }
+      setCartLength(_addToCartReducer && _addToCartReducer._addToCartReducer.length )
   }, [])
+
+  useEffect(() => {
+    if (_addToCartReducer) {
+      setCartLength(_addToCartReducer && _addToCartReducer._addToCartReducer.length )
+    }
+  }, [_addToCartReducer])
 
   function IsMobile() {
     var Uagent = navigator.userAgent || navigator.vendor || window.opera;
@@ -42,6 +45,7 @@ const Header = () => {
   return (
     <React.Fragment>
       <div id="cartoverlay"></div>
+      {console.log(cartLength,"dnsmdnsmdnmsd")}
       <header className="header-container">
         <div className="image-container">
           <img
@@ -78,7 +82,7 @@ const Header = () => {
             </div>
             <div className="products-cart-container">
               <div className="cart" onClick={CartPopUp}>
-                <MdShoppingCart className="cart-icon" />{cartLength || 0}
+                <MdShoppingCart className="cart-icon" />{cartLength  || 0}
               </div>
             </div>
           </div>
@@ -92,4 +96,10 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    _addToCartReducer: state.addToCartReducer
+  }
+}
+
+export default connect(mapStateToProps)(Header)

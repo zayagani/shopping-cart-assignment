@@ -1,16 +1,16 @@
 import React from "react";
 import "../ProductCard/productcard.scss";
 import Button from "../Button";
+import {useDispatch } from "react-redux";
+import { addCart } from '../../Redux/action/cartAction/index.jsx'
 
 const ProductCard = ({ product }) => {
 
-const buyNowClick=(product)=>{
-  window.location.reload()
-  const prodArray=[]
-  prodArray.push({...product})
-  localStorage.setItem("item",JSON.stringify(prodArray))
+  const dispatch = useDispatch()
 
-}
+  const buyNowClick = (product) => {
+    dispatch(addCart(product))
+  }
 
   return (
     <div className="product-container">
@@ -23,13 +23,13 @@ const buyNowClick=(product)=>{
       </div>
       <div className="product-price-button-container">
         <div className="product-price">Rs{product.price}</div>
-        <Button type="sign" handleClick={()=>buyNowClick(product)}>
-          Buy now 
+        <Button type="sign" handleClick={() => buyNowClick(product)}>
+          Buy now
           <span
             className="product-card-price--mobile"
             style={{ color: "white" }}
           >
-           Rs {product.price}
+            Rs {product.price}
           </span>
         </Button>
       </div>

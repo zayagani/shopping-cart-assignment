@@ -11,6 +11,10 @@
     right: 11%;
     width: 30%;
   }
+  .cart-content{
+    height: 60vh;
+    overflow: auto;
+  }
   .nocartItem{
     display: flex;
     justify-content: center;
