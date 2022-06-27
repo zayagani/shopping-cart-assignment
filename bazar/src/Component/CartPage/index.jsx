@@ -6,7 +6,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { connect } from 'react-redux';
 import { cartRemove } from '../../Redux/action/cartAction/cartRemove'
-import { useSelector, useDispatch } from "react-redux";
+import { cartIncrement } from "../../Redux/action/cartAction/incrementAction";
+import { cartdecrement } from "../../Redux/action/cartAction/decrementAction";
+import { useDispatch } from "react-redux";
 
 const CartModel = ({ handleCartOpen, props, _addToCartReducer }) => {
 
@@ -18,57 +20,43 @@ const CartModel = ({ handleCartOpen, props, _addToCartReducer }) => {
 
   useEffect(() => {
     _addToCartReducer && _addToCartReducer.map((data, i) => {
+      
       return setItemPrice(data.price)
     })
     setCartData(_addToCartReducer)
 
   }, [])
 
+
+  useEffect(() => {
+    let subtotal =0;
+    _addToCartReducer.map(cartProduct => {
+      
+        subtotal += cartProduct.qty * cartProduct.price;
+    })
+    setTotalPrice(subtotal)
+
+  }, [_addToCartReducer])
+
   const removeCartItem = (id) => {
     dispatch(cartRemove(id))
   }
 
   const increment = (data, i) => {
-    const crtdata = cartData && cartData.map((item, i) => {
-      if (item.id === data.id) {
-        return ({ ...item, qty: item.qty + 1, price: item.price + itemPrice })
-      } else {
-        return item
-      }
-    })
-    setCartData(crtdata)
-
+    dispatch(cartIncrement(data))
 
   }
   const decrement = (data, i) => {
-    const crtdata = cartData && cartData.map((item, i) => {
-      if (item.id === data.id) {
-        return ({ ...item, qty: item.qty - 1, price: item.price - (itemPrice) })
-      } else {
-        return item
-      }
-    })
-    setCartData(crtdata)
-  }
+    dispatch(cartdecrement(data))
 
-  useEffect(()=>{
-if(cartData){
-  cartData && cartData.map((data,i)=>{
-    let totPrice= 0
-    totPrice=data.price+totalPrice 
-     setTotalPrice(totPrice)
-  })
-  
-}
-  },[cartData])
+  }
 
   return (
     <div className="CartModel-container">
       <div className="cartPopUp">
-        {console.log(totalPrice,"msmndsmndmsnd")}
         <header className="cartPopUp-header-container">
           <div className="cartModel-header-left">
-            My Cart <span>({cartData && cartData.length} item)</span>
+            My Cart <span>({_addToCartReducer && _addToCartReducer.length} item)</span>
           </div>
           <div className="cartModel-header-right" onClick={handleCartOpen}>
             x
@@ -92,7 +80,7 @@ if(cartData){
                       <button className="cartModel-price-button" onClick={() => increment(items && items, i)}>+</button>
                       <span onClick={() => removeCartItem(items)}>x</span>
                     </div>
-                    <span>Rs{items && items.price}</span>
+                    <span>Rs{(items && items.price)*items.qty}</span>
                   </div>
                 </div>
               </div>
@@ -144,7 +132,7 @@ if(cartData){
 
 const mapStateToProps = state => {
   return {
-    _addToCartReducer: state.addToCartReducer
+    _addToCartReducer: state.addToCartReducer,
   }
 }
 
